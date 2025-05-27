@@ -3,8 +3,10 @@
 namespace App\Filament\Resources\PostResource\Pages;
 
 use App\Filament\Resources\PostResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
+use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Database\Eloquent\Builder;
 
 class ListPosts extends ListRecords
 {
@@ -13,7 +15,22 @@ class ListPosts extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
+        ];
+    }
+
+    public function getTabs(): array
+    {
+        return [
+            // Tabs::make()->schema([
+                Tab::make('All'),
+                Tab::make('Published')->modifyQueryUsing(function (Builder $query): Builder {
+                    return $query->where('published', true);
+                }),
+                Tab::make('Unpublished')->modifyQueryUsing(function (Builder $query): Builder {
+                    return $query->where('published', false);
+                }),
+            // ]),
         ];
     }
 }
