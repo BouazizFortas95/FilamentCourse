@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\CommentResource\RelationManagers\CommentsRelationManager;
 use App\Filament\Resources\PostResource\Pages;
 use App\Filament\Resources\PostResource\RelationManagers\AuthorsRelationManager;
 use App\Models\Category;
@@ -141,6 +142,7 @@ class PostResource extends Resource
     {
         return [
             AuthorsRelationManager::class,
+            CommentsRelationManager::class
         ];
     }
 
