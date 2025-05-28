@@ -22,13 +22,18 @@ class CategoryResource extends Resource
     protected static ?string $model = Category::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-queue-list';
+
     protected static ?string $modelLabel = 'Post Categories';
+
+    protected static ?string $navigationGroup = 'Blog';
+
+     protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('name')->required()
+                TextInput::make('name')->required()->minLength(1)->maxLength(150)
                 ->live(onBlur: true)
                 ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
                 TextInput::make('slug')->required()->readOnly(),
